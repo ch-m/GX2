@@ -1,22 +1,62 @@
 {
-  "name": "gx2",
+  "name": "jesus-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "server.js",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/http/server.js",
+    "build": "sucrase ./src -d ./dist --transforms imports && cp ./src/app/templates/emails/*.hbs ./dist/app/templates/emails && cp ./src/app/templates/emails/layouts/*.hbs ./dist/app/templates/emails/layouts && cp ./src/app/templates/emails/partials/*.hbs ./dist/app/templates/emails/partials",
+    "start-prod": "node dist/https/server.js",
+    "start-dev": "node dist/http/server.js",
+    "run-migrations": "sequelize db:migrate",
+    "migrations-undo": "sequelize db:migrate:undo",
+    "migrations-undo-all": "sequelize db:migrate:undo:all",
+    "seed": "sequelize db:seed:all",
+    "seed-undo": "sequelize db:seed:undo:all"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ch-m/GX2.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ch-m/GX2/issues"
-  },
-  "homepage": "https://github.com/ch-m/GX2#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "@paypal/checkout-server-sdk": "^1.0.2",
+    "@sendgrid/mail": "^7.4.2",
+    "aws-sdk": "^2.851.0",
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "csvtojson": "^2.0.10",
+    "date-fns": "^2.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-handlebars": "^5.2.0",
+    "firebase-admin": "^9.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment-timezone": "^0.5.33",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "mysql2": "^2.2.5",
+    "nodemailer": "^6.4.17",
+    "nodemailer-express-handlebars": "^4.0.0",
+    "paypal-rest-sdk": "^1.8.1",
+    "sequelize": "^6.3.5",
+    "socket.io": "^3.1.0",
+    "swagger-jsdoc": "^6.0.2",
+    "swagger-ui-express": "^4.1.6",
+    "uuid": "^8.3.2",
+    "voucher-code-generator": "^1.1.1",
+    "wkx": "^0.5.0",
+    "xlsx": "^0.17.0",
+    "youch": "^2.1.1",
+    "yup": "^0.32.8"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.0.5",
+    "sequelize-cli": "^6.2.0",
+    "sucrase": "^3.17.1"
   }
 }
