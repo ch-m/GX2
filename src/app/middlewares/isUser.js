@@ -1,9 +1,9 @@
 import AppError from '../../errors/AppError';
 
 export default async (request, response, next) => {
-  if (!request.user.admin) {
+  if (request.user.admin) {
     throw new AppError(
-      'por favor faça login com uma conta de admin antes de tentar acessar este recurso!',
+      'por favor faça login com uma conta de usuario antes de tentar acessar este recurso!',
       403
     );
   }

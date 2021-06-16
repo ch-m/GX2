@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import 'express-async-errors';
-import path, { resolve } from 'path';
+import path from 'path';
 
 import express from 'express';
 import http from 'http';

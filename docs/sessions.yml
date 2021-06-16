@@ -1,0 +1,33 @@
+components:
+  schemas:
+    CreateSessionDTO:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@gmail.com
+        password:
+          type: string
+          example: 123456abc
+
+/sessions:
+  post:
+    summary: faz login
+    tags: [Session resources]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateSessionDTO'
+    responses:
+      200:
+        description: sessão criada, token retornado
+      401:
+        description: senha ou email incorretos, usuario não existe
+      500:
+        description: erro interno no servidor

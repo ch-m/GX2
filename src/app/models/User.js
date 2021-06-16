@@ -29,15 +29,11 @@ class User extends Model {
     this.hasMany(models.Book, {
       foreignKey: 'user_creation_id',
       as: 'booksCreated',
-    });/*
-    this.belongsTo(models.PasswordRecovery, {
-      foreignKey: 'password_recovery_id',
-      as: 'passwordRecovery',
     });
-    this.belongsTo(models.Role, {
-      foreignKey: 'role_id',
-      as: 'role',
-    }); */
+    this.hasMany(models.BookReserve, {
+      foreignKey: 'user_id',
+      as: 'myReserves',
+    });
   }
 
   toJSON() {

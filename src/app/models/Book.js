@@ -1,5 +1,4 @@
 import { Model, DataTypes } from 'sequelize';
-import bcrypt from 'bcryptjs';
 
 class Book extends Model {
   static init(sequelize) {
@@ -10,6 +9,15 @@ class Book extends Model {
         },
         synopsis: {
           type: DataTypes.BIGINT,
+        },
+        numberOfUnits: {
+          field: 'number_of_units',
+          type: DataTypes.INTEGER,
+          defaultValue: 0,
+        },
+        availableUnits: {
+          field: 'available_units',
+          type: DataTypes.INTEGER,
         },
       },
       {
@@ -31,6 +39,10 @@ class Book extends Model {
     this.belongsTo(models.Author, {
       foreignKey: 'author_id',
       as: 'author',
+    });
+    this.hasMany(models.BookReserve, {
+      foreignKey: 'book_id',
+      as: 'reserves',
     });
   }
 }

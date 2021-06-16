@@ -10,12 +10,12 @@ import AppError from '../../errors/AppError';
 class SessionController {
   async create(request, response) {
     const { email, password } = request.body;
-    
+
     const user = await User.findOne({
       where: {
-        email
-      }
-    })
+        email,
+      },
+    });
 
     if (!user) {
       throw new AppError('usuario não existe', 401);

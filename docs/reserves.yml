@@ -1,0 +1,75 @@
+components:
+  schemas:
+    CreateReserveDTO:
+      type: object
+      required:
+        - bookId
+      properties:
+        bookId:
+          type: integer
+          example: 1
+
+/reserves:
+  get:
+    summary: lista reservas do usuario da sessão
+    tags: [Reserve resources]
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: lista de reservas
+      401:
+        description: não autorizado
+      500:
+        description: erro interno no servidor
+
+  post:
+    summary: cria uma reserva de livro
+    tags: [Reserve resources]
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateReserveDTO'
+    responses:
+      201:
+        description: reserva criada
+      400:
+        description: livro não existe, livro sem unidades disponiveis
+      401:
+        description: não autorizado
+      403:
+        description: recurso não disponivel para este tipo de sessão
+      409:
+        description: reserva ja existe
+      500:
+        description: erro interno no servidor
+
+/reserves/{id}/return-book:
+  post:
+    summary: retorna livro de uma reserva
+    tags: [Reserve resources]
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: id da reserva
+    security:
+      - bearerAuth: []
+    responses:
+      201:
+        description: livro retornado
+      400:
+        description: reserva não existe
+      401:
+        description: não autorizado
+      403:
+        description: recurso não disponivel para este tipo de sessão, recurso não pertence ao usuario da sessão
+      409:
+        description: livro ja foi retornado
+      500:
+        description: erro interno no servidor

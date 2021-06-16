@@ -1,5 +1,5 @@
 {
-  "name": "jesus-app",
+  "name": "jgx2-teste",
   "version": "1.0.0",
   "main": "server.js",
   "license": "MIT",
@@ -7,7 +7,6 @@
     "dev": "nodemon src/http/server.js",
     "build": "sucrase ./src -d ./dist --transforms imports && cp ./src/app/templates/emails/*.hbs ./dist/app/templates/emails && cp ./src/app/templates/emails/layouts/*.hbs ./dist/app/templates/emails/layouts && cp ./src/app/templates/emails/partials/*.hbs ./dist/app/templates/emails/partials",
     "start-prod": "node dist/https/server.js",
-    "start-dev": "node dist/http/server.js",
     "run-migrations": "sequelize db:migrate",
     "migrations-undo": "sequelize db:migrate:undo",
     "migrations-undo-all": "sequelize db:migrate:undo:all",

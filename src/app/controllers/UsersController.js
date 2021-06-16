@@ -1,39 +1,38 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-
-import { promisify } from 'util';
-
 import User from '../models/User';
-import authConfig from '../../config/auth';
 import AppError from '../../errors/AppError';
 
 class UsersController {
   async index(request, response) {
-
     const users = await User.findAll();
 
-    
     response.json(users);
   }
 
   async create(request, response) {
-    const { email, password, confirmPassword, administrator } = request.body;
-    
+    const {
+      email,
+      password,
+      confirmPassword,
+      administrator = false,
+    } = request.body;
+
     const user = await User.findOne({
       where: {
-        email
-      }
-    })
+        email,
+      },
+    });
 
     if (user) {
       throw new AppError('email ja cadastrado', 409);
+    } else if (password !== confirmPassword) {
+      throw new AppError('as senhas devem ser identicas', 400);
     }
 
     await User.create({
       email,
       password,
       administrator,
-    })
+    });
 
     response.status(201).send();
   }
@@ -48,11 +47,15 @@ class UsersController {
       throw new AppError('usuario não encontrado', 404);
     }
 
+    if (password !== confirmPassword) {
+      throw new AppError('as senhas devem ser identicas', 400);
+    }
+
     await user.update({
       email,
       password,
       administrator,
-    })
+    });
 
     response.status(200).send();
   }

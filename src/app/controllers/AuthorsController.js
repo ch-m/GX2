@@ -1,38 +1,27 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-
-import { promisify } from 'util';
-
-import User from '../models/User';
-import authConfig from '../../config/auth';
 import AppError from '../../errors/AppError';
-import Book from '../models/Book';
 import Author from '../models/Author';
 
 class AuthorsController {
   async index(request, response) {
-    const { admin } = request.user;
-
     const authors = await Author.findAll();
 
     response.json(authors);
   }
 
   async create(request, response) {
-    const { userId } = request.user;
     const { name } = request.body;
-    
+
     const author = await Author.findOne({
       where: {
         name,
-      }
-    })
+      },
+    });
 
     if (author) {
       throw new AppError('ja existe um autor com este nome', 409);
     }
 
-    await Author.create({ name })
+    await Author.create({ name });
 
     response.status(201).send();
   }
@@ -47,7 +36,7 @@ class AuthorsController {
       throw new AppError('autor não encontrado', 404);
     }
 
-    await author.update({ name })
+    await author.update({ name });
 
     response.status(200).send();
   }
